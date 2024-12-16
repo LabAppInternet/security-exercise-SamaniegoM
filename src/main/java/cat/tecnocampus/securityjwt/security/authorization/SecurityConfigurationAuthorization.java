@@ -52,6 +52,15 @@ public class SecurityConfigurationAuthorization {
                     auth.requestMatchers("/helloUser").access(hasScope("USER"));//.hasRole("USER");
                     auth.requestMatchers("/helloAdmin").access(hasScope("ADMIN"));
                     auth.requestMatchers("/helloUserAdmin").access(hasAnyScope("USER", "ADMIN"));
+                    auth.requestMatchers("/moderator").hasAuthority("MODERATOR");
+                    auth.requestMatchers(("helloMe")).permitAll();
+                    auth.requestMatchers(("moderator/aaa")).hasAuthority("MODERATOR");
+                    auth.requestMatchers(("moderator/bbb")).hasAuthority("MODERATOR");
+                    auth.requestMatchers(("moderator/ccc")).hasAuthority("MODERATOR");
+                    auth.requestMatchers(("moderator/aaa/admin")).hasAnyAuthority("ADMIN", "MODERATOR");
+                    auth.requestMatchers(("moderator/bbb/admin")).hasAnyAuthority("ADMIN", "MODERATOR");
+                    auth.requestMatchers(("moderator/ccc/admin")).hasAnyAuthority("ADMIN", "MODERATOR");
+                    auth.requestMatchers(("createSingleRoleUser")).hasAuthority("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -1,12 +1,19 @@
 package cat.tecnocampus.securityjwt.api;
 
+import cat.tecnocampus.securityjwt.application.UserController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
 @RestController
 public class APIController {
+
+    @Autowired
+    UserController controller;
 
     @GetMapping("/helloWorld")
     public String helloWorld() {
@@ -69,5 +76,9 @@ public class APIController {
         return "moderator/ccc/admin";
     }
 
+    @PostMapping("/createSingleRolUser")
+    public void createSingleRolUser(@RequestParam String email,@RequestParam String username,@RequestParam String password,@RequestParam int role) {
+        controller.createSingleRolUser(email,username,password,role);
+    }
     // TODO 2 add a PostMapping to create a new user with a single role. The role must be ADMIN or USER or MODERATOR
 }
